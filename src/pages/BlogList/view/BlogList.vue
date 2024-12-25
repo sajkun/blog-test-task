@@ -1,11 +1,12 @@
 <!-- 
- * Отображение всего приложения
+ * Страница со списком статей
  *
  * @author Вячеслав Кулешов
  * @email sajkunrnd@gmail.com
  -->
-<script setup lang="ts"></script>
 
 <template>
-  <RouterView />
+  <div>1</div>
 </template>
+
+<script setup lang="ts"></script>

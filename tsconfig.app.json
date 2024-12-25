@@ -1,14 +1,22 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "include": ["src/**/*"],
+  //   "exclude": ["src/**/__tests__/*"],
+  "emitDecoratorMetadata": true,
+  "experimentalDecorators": true,
   "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
-  },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
+    //  "composite": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "typeRoots": [
+      "./node_modules/@types",
+      "./node_modules/vue",
+      "./node_modules/@yandex/ymaps3-types",
+      "./src/shared/types"
+    ],
+    "paths": {
+      "@/*": ["./src/*"],
+      "~/*": ["./node_modules/*"]
+    }
+  }
 }
