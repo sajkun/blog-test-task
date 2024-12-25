@@ -9,6 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "eslint-plugin-vuetify": "^2.5.1",
+    "pinia": "^2.3.0",
+    "sass": "^1.83.0",
+    "vite-plugin-vuetify": "^2.0.4",
     "vue": "^3.5.13"
   },
   "devDependencies": {
