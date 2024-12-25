@@ -1,6 +1,13 @@
+/**
+ * Класс, описывающий структуру данных статьи
+ *
+ * @author Вячеслав Кулешов
+ * @email sajkunrnd@gmail.com
+ */
+
 class BlogClass {
   constructor(
-    public id: number,
+    readonly id: number,
     public title: string,
     public text: string,
     public created_at: string,
