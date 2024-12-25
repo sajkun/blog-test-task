@@ -13,8 +13,7 @@ class BlogClass implements UpdateRemoveInterface {
     public title: string = 'Sample',
     public text: string = 'Lorem	ipsum',
     public created_at?: string,
-    public edited_at?: string,
-    public thumbnail?: string
+    public edited_at?: string
   ) {}
 
   update = async () => {
