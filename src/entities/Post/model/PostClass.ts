@@ -17,11 +17,9 @@ class PostClass implements PostType, UpdateRemoveInterface {
     public edited_at?: string
   ) {}
 
-  update = async () => {
-    return { id: this.id }
-  }
+  update = () => {}
 
-  remove = async () => {}
+  remove = () => {}
 
   /**
    * Получение ключей класса
