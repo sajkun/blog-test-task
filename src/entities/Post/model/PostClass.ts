@@ -6,9 +6,9 @@
  */
 
 import type { UpdateRemoveInterface } from '@/shared/interface'
-import type { ArticleType } from '@/shared/types'
+import { type PostType } from '.'
 
-class BlogClass implements UpdateRemoveInterface, ArticleType {
+class PostClass implements PostType, UpdateRemoveInterface {
   constructor(
     readonly id: number = -1,
     public title: string = 'Sample',
@@ -21,19 +21,17 @@ class BlogClass implements UpdateRemoveInterface, ArticleType {
     return { id: this.id }
   }
 
-  remove = async () => {
-    return { id: this.id }
-  }
+  remove = async () => {}
 
   /**
-   * Получение ключей для объекта
+   * Получение ключей класса
    */
-  static getKeys(): (keyof ArticleType)[] {
-    const keys = Object.keys(new BlogClass()).filter(
+  static getKeys(): (keyof PostType)[] {
+    const keys = Object.keys(new PostClass()).filter(
       (k) => k !== 'remove' && k !== 'update'
-    ) as (keyof ArticleType)[]
+    ) as (keyof PostType)[]
     return keys
   }
 }
 
-export { BlogClass }
+export { PostClass }

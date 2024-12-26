@@ -3,5 +3,5 @@
  * @email sajkunrnd@gmail.com
  */
 
-export { BlogClass } from './model'
-export { postStorage } from './storage'
+export { PostClass, type PostType } from './model'
+export { usePostStorage } from './storage'

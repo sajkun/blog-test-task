@@ -8,6 +8,6 @@
 type hasId = { id: number }
 
 export interface UpdateRemoveInterface {
-  update: () => Promise<{ id: number }>
-  remove: () => Promise<{ id: number }>
+  update: () => void
+  remove: () => void
 }

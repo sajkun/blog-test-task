@@ -3,7 +3,7 @@
  * @email sajkunrnd@gmail.com
  */
 
-export type ArticleType = {
+export type PostType = {
   id: number
   title: string
   text: string

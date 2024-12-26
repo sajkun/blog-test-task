@@ -3,4 +3,4 @@
  * @email sajkunrnd@gmail.com
  */
 
-export { postStorage } from './postStorage'
+export { usePostStorage } from './usePostStorage'
