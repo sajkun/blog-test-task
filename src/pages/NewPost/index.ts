@@ -3,5 +3,5 @@
  * @email sajkunrnd@gmail.com
  */
 
-export { BlogList } from './BlogList'
-export { SinglePost } from './SinglePost'
+import NewPost from './view/NewPost.vue'
+export { NewPost }

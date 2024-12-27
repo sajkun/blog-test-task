@@ -1,6 +1,6 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["src/**/*"],
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "src/**/*.ts", "src/**/*.d.ts"],
   //   "exclude": ["src/**/__tests__/*"],
   "emitDecoratorMetadata": true,
   "experimentalDecorators": true,

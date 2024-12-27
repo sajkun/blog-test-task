@@ -3,5 +3,4 @@
  * @email sajkunrnd@gmail.com
  */
 
-export { BlogList } from './BlogList'
-export { SinglePost } from './SinglePost'
+export { PostCard } from './PostCard'
