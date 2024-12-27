@@ -8,19 +8,48 @@
 <template>
   <SiteHeader :showSearch="false"> </SiteHeader>
   <v-container>
-    <h2 class="text-h4">{{ post.title }}</h2>
+    <h2 class="text-h4" v-if="displayMode === 'display'">{{ displayPost.title }}</h2>
     <h3 class="v-card-subtitle">
-      <span v-if="post.created_at">опубликовано {{ post.created_at }}</span>
-      <span v-if="post.edited_at">отредактировано {{ post.edited_at }}</span>
+      <span v-if="displayPost.created_at">опубликовано {{ displayPost.created_at }}</span>
+      <div></div>
+      <span v-if="displayPost.edited_at">отредактировано {{ displayPost.edited_at }}</span>
     </h3>
+    <v-text-field
+      class="mt-2"
+      variant="outlined"
+      hide-details="auto"
+      label="Заголовок статьи"
+      v-model="singlePost.title"
+      :rules="titleRules"
+      v-if="displayMode === 'edit'"
+    ></v-text-field>
+    <p class="mt-4">{{ displayPost.text }}</p>
 
-    <p class="mt-4">{{ post.text }}</p>
+    <v-row class="mt-4">
+      <v-col class="text-end" v-if="displayMode === 'display'">
+        <v-btn type="button" class="edit-btn" @click="editPost" title="редактировать">
+          <v-icon aria-hidden="true">mdi-content-save-outline</v-icon>
+
+          Редактировать
+        </v-btn>
+      </v-col>
+      <v-col class="text-end" v-if="displayMode === 'edit'">
+        <v-btn type="button" class="edit-btn" @click="cancelEditPost" title="отменитб изменения">
+          отмена
+        </v-btn>
+        <v-btn type="button" class="edit-btn" @click="updatePost" title="сохранить изменения">
+          <v-icon aria-hidden="true">mdi-content-save-outline</v-icon>
+
+          сохранить
+        </v-btn>
+      </v-col>
+    </v-row>
     <RouterLink class="btn text-blue mt-4" @click.stop :to="'/'">Назад</RouterLink>
   </v-container>
 </template>
 
 <script setup lang="ts">
-import { PostClass, usePostStorage, type PostType } from '@/entities/Post'
+import { PostClass, titleRules, usePostStorage, type PostType } from '@/entities/Post'
 import { SiteHeader } from '@/widgets'
 import { computed } from 'vue'
 import { nextTick, onMounted, ref } from 'vue'
@@ -30,8 +59,12 @@ moment.locale('ru')
 
 const route = useRoute()
 const postStorage = usePostStorage()
-
+type DisplayMode = 'display' | 'edit'
+const displayMode: Ref<DisplayMode> = ref('display')
+const oldPost: Ref<PostClass | undefined> = ref()
 const postId = ref(parseInt(route.params.post_id as string))
+
+const singlePost = ref(new PostClass({} as PostType))
 
 /**
  * Получение данных при загрузке страницы
@@ -41,11 +74,12 @@ onMounted(() => {
 
   nextTick().then(() => {
     postStorage.updateItems()
+    singlePost.value = new PostClass(postStorage.items.get(+postId.value)!)
   })
 })
 
-const post = computed(() => {
-  const _post = postStorage.items.get(+postId.value)
+const displayPost = computed(() => {
+  const _post = singlePost.value
   if (!_post) return new PostClass({} as PostType)
 
   const displayPost = new PostClass(_post!)
@@ -59,4 +93,33 @@ const post = computed(() => {
     : ''
   return displayPost
 })
+
+/**
+ * Вклюение редактирования записи
+ *
+ * @returns {void}
+ */
+const editPost = () => {
+  const postData = JSON.parse(JSON.stringify(singlePost.value)) as PostType
+  oldPost.value = new PostClass(postData)
+  displayMode.value = 'edit'
+}
+
+/**
+ * отмена редактирования записи
+ */
+const cancelEditPost = () => {
+  singlePost.value.title = oldPost.value?.title ?? singlePost.value.title
+  oldPost.value = undefined
+  displayMode.value = 'display'
+}
+
+/**
+ * сохранение поста
+ */
+const updatePost = () => {
+  displayMode.value = 'display'
+  singlePost.value.edited_at = new Date().toISOString()
+  singlePost.value.update()
+}
 </script>

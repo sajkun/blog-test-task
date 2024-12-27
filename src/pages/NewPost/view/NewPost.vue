@@ -42,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { PostClass, type PostType } from '@/entities/Post'
+import { PostClass, type PostType, titleRules } from '@/entities/Post'
 import { SiteHeader } from '@/widgets'
 import { nextTick } from 'vue'
 import { ref, type Ref } from 'vue'
@@ -51,10 +51,7 @@ const newPostForm: Ref<HTMLFormElement | undefined> = ref()
 const newPostClass = ref(new PostClass({} as PostType))
 
 const rules = {
-  title: [
-    (value: string) => !!value || 'Обязательное поле',
-    (value: string) => (value || '').length <= 50 || 'Максимум 50 символов'
-  ],
+  title: titleRules,
   text: [(value: string) => !!value || 'Обязательное поле']
 }
 

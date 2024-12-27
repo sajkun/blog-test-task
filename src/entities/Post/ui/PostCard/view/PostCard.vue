@@ -22,7 +22,7 @@
               variant="outlined"
               hide-details="auto"
               label="Заголовок статьи"
-              v-model="postToDisplay.title"
+              v-model="post.title"
               :rules="titleRules"
             ></v-text-field>
           </v-col>
@@ -65,18 +65,13 @@
 import { PostClass, type PostType } from '@/entities/Post/model'
 import { computed, ref, watch, type Ref } from 'vue'
 import { type PropType } from 'vue'
-
+import { titleRules } from '../../../const'
 import moment from 'moment/min/moment-with-locales'
 moment.locale('ru')
 
 type DisplayMode = 'display' | 'edit'
 const displayMode: Ref<DisplayMode> = ref('display')
 const oldPost: Ref<PostClass | undefined> = ref()
-
-const titleRules = [
-  (value: string) => !!value || 'Обязательное поле',
-  (value: string) => (value || '').length <= 50 || 'Максимум 50 символов'
-]
 
 const props = defineProps({
   info: {
