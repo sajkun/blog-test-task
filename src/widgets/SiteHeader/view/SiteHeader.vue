@@ -48,6 +48,11 @@ watch(searchText, (text) => {
 
 onMounted(() => {
   headerHeight.value = header.value?.offsetHeight ? header.value?.offsetHeight : headerHeight.value
+  window.addEventListener('resize', () => {
+    headerHeight.value = header.value?.offsetHeight
+      ? header.value?.offsetHeight
+      : headerHeight.value
+  })
 })
 </script>
 
@@ -57,5 +62,8 @@ onMounted(() => {
   top: 0;
   left: 0;
   right: 0;
+  z-index: 10;
+  background-color: #fff;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
 }
 </style>

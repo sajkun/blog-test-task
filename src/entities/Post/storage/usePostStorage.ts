@@ -40,7 +40,7 @@ const usePostStorage = defineStore('appPostsData', {
     },
 
     /**
-     * получает максимальный шв из всех статей
+     * получает максимальный id из всех статей
      *
      * @return {number} id
      */
@@ -87,7 +87,8 @@ const usePostStorage = defineStore('appPostsData', {
      * @returns {void}
      */
     createDemoList(): void {
-      if (!this.items.size) localStorage.blogPosts = JSON.stringify(ARTICLES)
+      const storage = this
+      if (!storage.getList().length) localStorage.blogPosts = JSON.stringify(ARTICLES)
     },
 
     /**
@@ -100,6 +101,7 @@ const usePostStorage = defineStore('appPostsData', {
       const newId = storage.getPostMaxId() + 1
       post.id = newId
       storage.items.set(newId, post)
+      storage.saveList()
       return newId
     },
 
@@ -116,6 +118,7 @@ const usePostStorage = defineStore('appPostsData', {
         }
 
         storage.items.delete(id)
+        storage.saveList()
       } catch (e) {
         console.error(e)
       }
@@ -145,6 +148,8 @@ const usePostStorage = defineStore('appPostsData', {
         }
 
         storage.items.set(postData.id, postToUpdate)
+
+        storage.saveList()
       } catch (e) {
         console.log(e)
       }

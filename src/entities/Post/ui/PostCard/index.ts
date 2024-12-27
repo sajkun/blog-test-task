@@ -3,4 +3,5 @@
  * @email sajkunrnd@gmail.com
  */
 
-export { PostCard } from './PostCard'
+import PostCard from './view/PostCard.vue'
+export { PostCard }
