@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mb-4 post-card">
+  <v-card class="mb-4 post-card" :class="{ 'is-selected': isSelected }">
     <v-card-item>
       <v-card-title>
         <v-row justify="space-between" v-if="displayMode === 'display'">
@@ -45,6 +45,12 @@
         <span v-if="postToDisplay.edited_at">отредактировано {{ postToDisplay.edited_at }}</span>
       </v-card-subtitle>
       <v-card-text>{{ postToDisplay.text }}</v-card-text>
+
+      <v-card-actions class="text-end">
+        <RouterLink class="btn btn-sm btn-borders w-100" @click.stop :to="'/post/' + post.id"
+          >Подробнее</RouterLink
+        ></v-card-actions
+      >
     </v-card-item>
   </v-card>
 </template>
@@ -69,6 +75,12 @@ const props = defineProps({
     type: Number,
     required: false,
     default: null
+  },
+
+  isSelected: {
+    type: Boolean,
+    required: false,
+    default: false
   }
 })
 
@@ -123,18 +135,20 @@ const updatePost = () => {
  * удаление поста
  */
 const removePost = () => {
-  post.value.remove()
+  if (confirm('Вы уверены, что хотите удалить запись?')) {
+    post.value.remove()
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .post-card {
+  &.is-selected,
   &:hover {
-    background-color: #ccc;
-
-    & .v-sheet {
-      background-color: #ccc;
-    }
+    box-shadow:
+      0px 3px 10px -2px var(--v-shadow-key-umbra-opacity, rgba(0, 0, 0, 0.2)),
+      0px 2px 20px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.14)),
+      0px 1px 50px 0px var(--v-shadow-key-ambient-opacity, rgba(0, 0, 0, 0.12));
   }
 }
 

@@ -8,11 +8,9 @@
   <header class="site-header" ref="header">
     <v-container class="py-2">
       <v-row align="center">
-        <v-col md="3"
-          ><v-icon role="icon" aria-hidden="false" :style="{ fontSize: '1.5rem' }"
-            >mdi-emoticon-cool-outline
-          </v-icon></v-col
-        >
+        <v-col md="3">
+          <slot></slot>
+        </v-col>
         <v-col md="6">
           <v-sheet class="text-center"><h1>Тестовый блог</h1></v-sheet>
         </v-col>
@@ -24,6 +22,7 @@
             label="Поиск"
             clearable
             v-model="searchText"
+            v-if="showSearch"
           >
           </v-text-field>
         </v-col>
@@ -34,7 +33,18 @@
 </template>
 
 <script setup lang="ts">
+import { toRef } from 'vue'
 import { onMounted, ref, watch, type Ref } from 'vue'
+
+const props = defineProps({
+  showSearch: {
+    type: Boolean,
+    required: false,
+    default: true
+  }
+})
+
+const showSearch = toRef(props, 'showSearch')
 
 const searchText: Ref<string> = ref('')
 const header: Ref<HTMLHeadElement | undefined> = ref()

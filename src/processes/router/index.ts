@@ -6,7 +6,7 @@
  */
 
 import { createRouter, createWebHistory } from 'vue-router'
-import { BlogList } from '@/pages'
+import { BlogList, SinglePost } from '@/pages'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,6 +15,11 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: BlogList
+    },
+    {
+      path: '/post/:post_id',
+      name: 'post',
+      component: SinglePost
     }
   ]
 })

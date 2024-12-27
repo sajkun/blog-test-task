@@ -11,7 +11,14 @@
     <v-btn type="button">создать статью</v-btn>
   </v-container>
   <v-container>
-    <PostCard v-for="(post, id) in posts" :info="post" :key="'postCard' + id + post.id" />
+    <PostCard
+      :isSelected="isSelectedArticle === post.id"
+      v-for="(post, id) in posts"
+      :info="post"
+      :key="'postCard' + id + post.id"
+      @click="isSelectedArticle = post.id"
+      :maxTextLength="240"
+    />
     <v-sheet class="text-h5 text-center" v-if="!posts.length">Записей не найдено</v-sheet>
   </v-container>
 </template>
@@ -24,6 +31,7 @@ import { usePostStorage, PostCard } from '@/entities/Post'
 
 const postStorage = usePostStorage()
 const searchText = ref('')
+const isSelectedArticle = ref(-1)
 
 const posts = computed(() => {
   const posts = postStorage.list.filter((t) => {
