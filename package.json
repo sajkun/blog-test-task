@@ -9,6 +9,7 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
+		"@mdi/font": "^7.4.47",
 		"eslint-plugin-vuetify": "^2.5.1",
 		"pinia": "^2.3.0",
 		"reset-css": "^5.0.2",

@@ -6,12 +6,15 @@
  -->
 
 <template>
+  <SiteHeader />
   <div>1</div>
 </template>
 
 <script setup lang="ts">
 import { usePostStorage } from '@/entities/Post'
 import { nextTick, onMounted } from 'vue'
+
+import { SiteHeader } from '@/features'
 
 const postStorage = usePostStorage()
 
@@ -23,7 +26,6 @@ onMounted(() => {
 
   nextTick().then(() => {
     postStorage.updateItems()
-    postStorage.updatePost({ text: '2', id: 1 })
   })
 })
 </script>
