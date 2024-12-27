@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { PostClass, usePostStorage } from '@/entities/Post'
+import { PostClass, usePostStorage, type PostType } from '@/entities/Post'
 import { SiteHeader } from '@/widgets'
 import { computed } from 'vue'
 import { nextTick, onMounted, ref } from 'vue'
