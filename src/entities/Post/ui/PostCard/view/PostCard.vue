@@ -23,6 +23,7 @@
               hide-details="auto"
               label="Заголовок статьи"
               v-model="postToDisplay.title"
+              :rules="titleRules"
             ></v-text-field>
           </v-col>
           <v-col class="text-end">
@@ -41,14 +42,19 @@
         </v-row>
       </v-card-title>
       <v-card-subtitle>
-        <span v-if="postToDisplay.created_at">опубликовано {{ postToDisplay.created_at }} </span>
+        <span v-if="postToDisplay.created_at" class="me-2"
+          >опубликовано {{ postToDisplay.created_at }}
+        </span>
         <span v-if="postToDisplay.edited_at">отредактировано {{ postToDisplay.edited_at }}</span>
       </v-card-subtitle>
       <v-card-text>{{ postToDisplay.text }}</v-card-text>
 
       <v-card-actions class="text-end">
-        <RouterLink class="btn btn-sm btn-borders w-100" @click.stop :to="'/post/' + post.id"
-          >Подробнее</RouterLink
+        <RouterLink
+          class="btn btn-sm btn-borders w-100 text-blue"
+          @click.stop
+          :to="'/post/' + post.id"
+          >Читать далее</RouterLink
         ></v-card-actions
       >
     </v-card-item>
@@ -60,9 +66,17 @@ import { PostClass, type PostType } from '@/entities/Post/model'
 import { computed, ref, watch, type Ref } from 'vue'
 import { type PropType } from 'vue'
 
+import moment from 'moment/min/moment-with-locales'
+moment.locale('ru')
+
 type DisplayMode = 'display' | 'edit'
 const displayMode: Ref<DisplayMode> = ref('display')
 const oldPost: Ref<PostClass | undefined> = ref()
+
+const titleRules = [
+  (value: string) => !!value || 'Обязательное поле',
+  (value: string) => (value || '').length <= 50 || 'Максимум 50 символов'
+]
 
 const props = defineProps({
   info: {
@@ -93,12 +107,20 @@ const post = ref(new PostClass(props.info))
 /** отображаемый в карточке  */
 const postToDisplay = computed(() => {
   const maxTextLength = props.maxTextLength
-  const displayPost = post.value
+  const displayPost = new PostClass(post.value)
 
   displayPost.text =
     displayPost.text.length > maxTextLength && maxTextLength
       ? displayPost.text.slice(0, maxTextLength) + '...'
       : displayPost.text
+
+  displayPost.created_at = post.value.created_at
+    ? moment(post.value.created_at).format('DD MMMM YYYY в HH:MM')
+    : ''
+
+  displayPost.edited_at = post.value.edited_at
+    ? moment(post.value.edited_at).format('DD MMMM YYYY в HH:MM')
+    : ''
   return displayPost
 })
 

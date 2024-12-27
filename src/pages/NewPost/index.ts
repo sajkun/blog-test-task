@@ -3,4 +3,5 @@
  * @email sajkunrnd@gmail.com
  */
 
-export { type CRUDInterface } from './CRUDInterface'
+import NewPost from './view/NewPost.vue'
+export { NewPost }

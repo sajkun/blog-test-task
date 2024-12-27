@@ -7,7 +7,8 @@
 
 type hasId = { id: number }
 
-export interface UpdateRemoveInterface {
+export interface CRUDInterface {
   update: () => void
   remove: () => void
+  create: () => void
 }

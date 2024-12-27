@@ -8,7 +8,11 @@
 <template>
   <SiteHeader @search="execSearch" />
   <v-container class="text-end">
-    <v-btn type="button">создать статью</v-btn>
+    <RouterLink
+      to="/newpost"
+      class="v-btn v-btn--elevated v-theme--light v-btn--density-default v-btn--size-default v-btn--variant-elevated"
+      >создать статью</RouterLink
+    >
   </v-container>
   <v-container>
     <PostCard

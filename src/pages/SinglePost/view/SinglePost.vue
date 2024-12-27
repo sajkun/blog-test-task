@@ -9,7 +9,7 @@
   <SiteHeader :showSearch="false"> </SiteHeader>
   <v-container>
     <h2 class="text-h4">{{ post.title }}</h2>
-    <h3 class="text-h6">
+    <h3 class="v-card-subtitle">
       <span v-if="post.created_at">опубликовано {{ post.created_at }}</span>
       <span v-if="post.edited_at">отредактировано {{ post.edited_at }}</span>
     </h3>
@@ -25,6 +25,8 @@ import { SiteHeader } from '@/widgets'
 import { computed } from 'vue'
 import { nextTick, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import moment from 'moment/min/moment-with-locales'
+moment.locale('ru')
 
 const route = useRoute()
 const postStorage = usePostStorage()
@@ -44,7 +46,17 @@ onMounted(() => {
 
 const post = computed(() => {
   const _post = postStorage.items.get(+postId.value)
+  if (!_post) return new PostClass({} as PostType)
 
-  return new PostClass(_post!)
+  const displayPost = new PostClass(_post!)
+
+  displayPost.created_at = _post.created_at
+    ? moment(_post.created_at).format('DD MMMM YYYY в HH:MM')
+    : ''
+
+  displayPost.edited_at = _post.edited_at
+    ? moment(_post.edited_at).format('DD MMMM YYYY в HH:MM')
+    : ''
+  return displayPost
 })
 </script>

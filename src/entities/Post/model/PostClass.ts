@@ -5,15 +5,15 @@
  * @email sajkunrnd@gmail.com
  */
 
-import type { UpdateRemoveInterface } from '@/shared/interface'
+import type { CRUDInterface } from '@/shared/interface'
 import { type PostType } from '.'
 import { usePostStorage } from '..'
 
 let storage
-class PostClass implements PostType, UpdateRemoveInterface {
+class PostClass implements PostType, CRUDInterface {
   readonly id: number = -1
-  public title: string = 'Sample'
-  public text: string = 'Lorem	ipsum'
+  public title: string = ''
+  public text: string = ''
   public created_at?: string
   public edited_at?: string
 
@@ -22,9 +22,13 @@ class PostClass implements PostType, UpdateRemoveInterface {
     this.id = id
     this.title = title
     this.text = text
-    this.created_at = created_at ?? '-'
-    this.edited_at = edited_at ?? '-'
+    this.created_at = created_at ?? ''
+    this.edited_at = edited_at ?? ''
     storage = usePostStorage()
+  }
+
+  create = () => {
+    storage!.createPost(this)
   }
 
   update = () => {
