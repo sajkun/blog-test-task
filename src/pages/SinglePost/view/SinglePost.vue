@@ -51,7 +51,7 @@
 <script setup lang="ts">
 import { PostClass, titleRules, usePostStorage, type PostType } from '@/entities/Post'
 import { SiteHeader } from '@/widgets'
-import { computed } from 'vue'
+import { computed, type Ref } from 'vue'
 import { nextTick, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import moment from 'moment/min/moment-with-locales'
